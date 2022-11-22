@@ -19,6 +19,14 @@ public interface MonDao {
     @Query("Select * FROM VDQuestion")
     List<VDQuestion> touteLesQuestions();
 
+    @Insert
+    Long insertVote(VDVote v);
+
+
+    @Query("Select idVote FROM VDVote WHERE idQuestion =:idquestion ")
+    List<VDVote> insertVote (Long idquestion);
+
+
 
 
 }

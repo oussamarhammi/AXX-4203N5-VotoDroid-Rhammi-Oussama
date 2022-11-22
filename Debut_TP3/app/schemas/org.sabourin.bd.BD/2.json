@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "554ed29dbcd5550e37539c4c134291e5",
+    "identityHash": "085a8ffef1b51a8c01332a4018d1659d",
     "entities": [
       {
         "tableName": "VDQuestion",
@@ -29,12 +29,56 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "VDVote",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idVote` INTEGER PRIMARY KEY AUTOINCREMENT, `idQuestion` INTEGER, `valeurVote` INTEGER NOT NULL, FOREIGN KEY(`idQuestion`) REFERENCES `VDQuestion`(`idQuestion`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "idVote",
+            "columnName": "idVote",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idQuestion",
+            "columnName": "idQuestion",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "valeurVote",
+            "columnName": "valeurVote",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "idVote"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "VDQuestion",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "idQuestion"
+            ],
+            "referencedColumns": [
+              "idQuestion"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '554ed29dbcd5550e37539c4c134291e5')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '085a8ffef1b51a8c01332a4018d1659d')"
     ]
   }
 }

@@ -6,7 +6,8 @@ import androidx.room.RoomDatabase;
 import org.sabourin.modele.VDQuestion;
 import org.sabourin.modele.VDVote;
 
-@Database(entities = {VDQuestion.class}, version = 2,  exportSchema = true)
+@Database(entities = {VDQuestion.class
+,VDVote.class}, version = 2,  exportSchema = true)
 public abstract class BD extends RoomDatabase {
     public abstract MonDao monDao();
 }

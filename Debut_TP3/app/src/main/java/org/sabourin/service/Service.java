@@ -7,6 +7,8 @@ import org.sabourin.modele.VDVote;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +48,31 @@ public class Service {
         //TODO Présentement :   retourne une liste vide
         //TODO À faire :        trier la liste reçue en BD par le nombre de votes et la retourner
 
+        Collections.sort(maBD.monDao().touteLesQuestions(), new Comparator<VDQuestion>() {
+            @Override
+            public int compare(VDQuestion vdq1, VDQuestion vdq2) {
 
+                int voteq1 = maBD.monDao().insertVote(vdq1.idQuestion).size();
+                int voteq2 =  maBD.monDao().insertVote(vdq2.idQuestion).size();
+
+                int difference = voteq1 - voteq2;
+                if (difference == 0) {
+
+                    // Both are equal
+                    return 0;
+                }
+                else if (difference < 0) {
+
+                    // obj1 < obj2
+                    return -1;
+                }
+                else {
+
+                    // obj1 > obj2
+                    return 1;
+                }
+            }
+        });
         return maBD.monDao().touteLesQuestions();
     }
 
