@@ -46,7 +46,7 @@ public class CreationQuestion extends AppCompatActivity {
             try {
                 service.creerQuestion(maQuestion);
             } catch (MauvaiseQuestion e) {
-                e.printStackTrace();
+                Log.e("CREERQUESTION", "Impossible de créer la question : " + e.getMessage());
             }
 
         });
