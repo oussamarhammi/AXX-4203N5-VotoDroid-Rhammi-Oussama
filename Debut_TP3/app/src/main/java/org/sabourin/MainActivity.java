@@ -31,9 +31,44 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+        maBD =  Room.databaseBuilder(getApplicationContext(), BD.class, "BDQuestions")
+                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
+                .build();
+
+        service = new Service(maBD);
+        //creerQuestion();
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
 
 
+        this.initRecycler();
+        binding.btnAjouter.setOnClickListener(view3 -> {
+            {
+                Intent i = new Intent(MainActivity.this,CreationQuestion.class);
+                startActivity(i);
+            }
+        });
+
+        for (VDQuestion q: service.toutesLesQuestions())
+        {
+
+            adapter.list.add(q);
+
+        }
+
+        adapter.notifyDataSetChanged();
+
+
+
+    }
 
     private void initRecycler() {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
@@ -50,59 +85,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void remplirRecycler() {
-        for (int i = 0 ; i < 20 ; i++) {
-
-            String [] questions= {"aimes tu les pommes?","aimes tu les bananes?",
-                    "aimes tu la pastèque? ","aimes tu les abricots?","aimes tu les pêche?","aimes tu les poires?" ,"aimes tu les mangues?","aimes tu les ananas?"
-                    ,"aimes tu les kiwis?","aimes tu les figues? ","aimes tu les framboises?","aimes tu les myrtilles?","aimes tu les melons?","aimes tu les raisons?"
-                    ,"aimes tu les mûres?","aimes tu les fraises?","aimes tu les cassis?","aimes tu les groseilles?","aimes tu les prunes?","aimes tu les cerises ?",
-                    "aimes tu les pamplemousses?","aimes tu les clémentines?"
-
-            };
-
-            Question question =  new Question();
-            question.question = questions[i];
-            adapter.list.add(question);
-
-        }
-
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        maBD =  Room.databaseBuilder(getApplicationContext(), BD.class, "BDQuestions")
-                .allowMainThreadQueries()
-                .fallbackToDestructiveMigration()
-                .build();
-        service = new Service(maBD);
-        creerQuestion();
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
 
 
-        binding.btnAjouter.setOnClickListener(view3 -> {
-            {
-                Intent i = new Intent(MainActivity.this,CreationQuestion.class);
-                startActivity(i);
-            }
-        });
-        // initialisation du recycler
-        this.initRecycler();
-        this.remplirRecycler();
-    }
-
-    private void creerQuestion (){
-        try{
-            VDQuestion maQuestion = new VDQuestion();
-            maQuestion.texteQuestion = "As-tu hâte au nouveau film The Matrix Resurrections?";
-            service.creerQuestion(maQuestion);
-        }catch (MauvaiseQuestion m){
-            Log.e("CREERQUESTION", "Impossible de créer la question : " + m.getMessage());
-        }
-    }
 }

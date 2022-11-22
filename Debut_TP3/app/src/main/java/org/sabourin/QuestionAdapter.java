@@ -10,11 +10,13 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.sabourin.modele.VDQuestion;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.MyViewHolder> {
-    public List<Question> list;
+    public List<VDQuestion> list;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -52,8 +54,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.MyView
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        Question questionCourante = list.get(position);
-        holder.textView.setText(questionCourante.question);
+        VDQuestion questionCourante = list.get(position);
+        holder.textView.setText(questionCourante.texteQuestion);
         holder.imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

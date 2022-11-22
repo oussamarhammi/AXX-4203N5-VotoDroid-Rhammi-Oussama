@@ -6,6 +6,7 @@ import org.sabourin.modele.VDQuestion;
 import org.sabourin.modele.VDVote;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +47,7 @@ public class Service {
         //TODO À faire :        trier la liste reçue en BD par le nombre de votes et la retourner
 
 
-        return new ArrayList<>();
+        return maBD.monDao().touteLesQuestions();
     }
 
     

@@ -16,4 +16,9 @@ public interface MonDao {
 
     //TODO Compléter les autres actions
 
+    @Query("Select * FROM VDQuestion")
+    List<VDQuestion> touteLesQuestions();
+
+
+
 }
