@@ -13,6 +13,8 @@ public class VDVote {
 
     public Long idQuestion;
 
-    public int valeurVote;
+
+
+    public String nom;
 
 }

@@ -16,6 +16,7 @@ import org.sabourin.bd.BD;
 import org.sabourin.databinding.ActivityMainBinding;
 import org.sabourin.exceptions.MauvaiseQuestion;
 import org.sabourin.modele.VDQuestion;
+import org.sabourin.modele.VDVote;
 import org.sabourin.service.Service;
 
 public class MainActivity extends AppCompatActivity {

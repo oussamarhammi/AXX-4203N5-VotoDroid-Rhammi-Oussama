@@ -1,6 +1,9 @@
 package org.sabourin.service;
 
+import com.github.mikephil.charting.formatter.IFillFormatter;
+
 import org.sabourin.bd.BD;
+import org.sabourin.exceptions.MauvaisVote;
 import org.sabourin.exceptions.MauvaiseQuestion;
 import org.sabourin.modele.VDQuestion;
 import org.sabourin.modele.VDVote;
@@ -39,11 +42,23 @@ public class Service {
     }
 
     
-    public void creerVote(VDVote vdVote) {
+    public void creerVote(VDVote vdVote) throws MauvaisVote {
+        if(vdVote.idVote.equals(vdVote.idQuestion)) throw new MauvaisVote("il existe deja un vote");
+        if(vdVote.nom.trim().length() < 4) throw new MauvaisVote("nom trop court");
 
+        for (VDVote q : maBD.monDao().toutLesVotes()){
+            if (q.nom.equals(vdVote.nom))
+            {
+                throw new MauvaisVote("nom deja voté");
+            }
+        }
+        vdVote.idVote = maBD.monDao().insertVote(vdVote);
     }
 
-    
+
+
+
+
     public List<VDQuestion> toutesLesQuestions() {
         //TODO Présentement :   retourne une liste vide
         //TODO À faire :        trier la liste reçue en BD par le nombre de votes et la retourner
@@ -52,8 +67,8 @@ public class Service {
             @Override
             public int compare(VDQuestion vdq1, VDQuestion vdq2) {
 
-                int voteq1 = maBD.monDao().insertVote(vdq1.idQuestion).size();
-                int voteq2 =  maBD.monDao().insertVote(vdq2.idQuestion).size();
+                int voteq1 = maBD.monDao().selectVote(vdq1.idQuestion).size();
+                int voteq2 =  maBD.monDao().selectVote(vdq2.idQuestion).size();
 
                 int difference = voteq1 - voteq2;
                 if (difference == 0) {
