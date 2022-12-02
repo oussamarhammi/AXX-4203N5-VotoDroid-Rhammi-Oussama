@@ -22,7 +22,7 @@ public interface MonDao {
 
 
 
-    @Query("Select idVote FROM VDVote WHERE idQuestion =:idquestion ")
+    @Query("Select * FROM VDVote WHERE idQuestion =:idquestion ")
     List<VDVote> selectVote(Long idquestion);
 
 

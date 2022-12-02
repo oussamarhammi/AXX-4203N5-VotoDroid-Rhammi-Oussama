@@ -1,8 +1,14 @@
 package org.sabourin.service;
 
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import com.github.mikephil.charting.formatter.IFillFormatter;
 
+import org.sabourin.R;
 import org.sabourin.bd.BD;
+import org.sabourin.databinding.CreationQuestionBinding;
 import org.sabourin.exceptions.MauvaisVote;
 import org.sabourin.exceptions.MauvaiseQuestion;
 import org.sabourin.modele.VDQuestion;
@@ -18,6 +24,9 @@ import java.util.Map;
 public class Service {
 
     private BD maBD;
+
+    public int editText;
+
 
     public Service(BD maBD){
         this.maBD = maBD;
@@ -41,21 +50,16 @@ public class Service {
         vdQuestion.idQuestion = maBD.monDao().insertQuestion(vdQuestion);
     }
 
-    
+
     public void creerVote(VDVote vdVote) throws MauvaisVote {
-        if(vdVote.idVote.equals(vdVote.idQuestion)) throw new MauvaisVote("il existe deja un vote");
         if(vdVote.nom.trim().length() < 4) throw new MauvaisVote("nom trop court");
-
         for (VDVote q : maBD.monDao().toutLesVotes()){
-            if (q.nom.equals(vdVote.nom))
-            {
-                throw new MauvaisVote("nom deja voté");
+            if (q.nom.equals(vdVote.nom) && q.idQuestion.equals(vdVote.idQuestion))
+                throw new MauvaisVote("ce nom a deja voté à cette question");
             }
-        }
         vdVote.idVote = maBD.monDao().insertVote(vdVote);
-    }
 
-
+        }
 
 
 

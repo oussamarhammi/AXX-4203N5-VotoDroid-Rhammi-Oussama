@@ -2,6 +2,8 @@ package org.sabourin.modele;
 
 import static androidx.room.ForeignKey.CASCADE;
 
+import android.widget.RatingBar;
+
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
@@ -14,6 +16,7 @@ public class VDVote {
     public Long idQuestion;
 
 
+    public float barVote;
 
     public String nom;
 

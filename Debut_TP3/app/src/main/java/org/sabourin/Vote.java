@@ -27,19 +27,28 @@ public class Vote extends AppCompatActivity {
         binding = VoteBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        binding.textView2.setText(getIntent().getStringExtra("texte"));
 
-        binding.button.setOnClickListener(View1 ->{
+        binding.button.setOnClickListener(View1 -> {
             {
-            Intent i = new Intent(Vote.this,MainActivity.class);
-            startActivity(i);
-        }
-        VDVote monVote = new VDVote();
-        try {
-            service.creerVote(monVote);
-        } catch (MauvaisVote e) {
-            Log.e("CREERVOTE", "Impossible de créer le vote : " + e.getMessage());
-        }
+                Intent i = new Intent(Vote.this, MainActivity.class);
+                startActivity(i);
+
+                VDVote monVote = new VDVote();
+                monVote.nom = binding.editTextTextPersonName2.getText().toString();
+
+
+                try {
+                    service.creerVote(monVote);
+                } catch (MauvaisVote e) {
+                    Log.e("CREERVOTE", "Impossible de créer le vote : " + e.getMessage());
+                }
+            }
         });
+
+
+
+
     }
 
 }
