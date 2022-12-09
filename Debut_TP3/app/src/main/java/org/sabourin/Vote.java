@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
@@ -41,17 +42,19 @@ public class Vote extends AppCompatActivity {
         binding.button.setOnClickListener(View1 -> {
             {
                 Intent i = new Intent(Vote.this, MainActivity.class);
-                startActivity(i);
+
 
                 VDVote monVote = new VDVote();
                 monVote.nom = binding.editTextTextPersonName2.getText().toString();
                 monVote.barVote = binding.ratingBar.getRating();
-
+                long monId = getIntent().getLongExtra("idtexte",-1);
+                monVote.idQuestion = monId;
+                startActivity(i);
 
                 try {
                     service.creerVote(monVote);
                 } catch (MauvaisVote e) {
-                    Log.e("CREERVOTE", "Impossible de créer le vote : " + e.getMessage());
+                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
             }
         });
