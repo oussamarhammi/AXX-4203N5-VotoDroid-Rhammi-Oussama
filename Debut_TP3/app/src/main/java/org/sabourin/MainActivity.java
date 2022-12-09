@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import org.sabourin.bd.BD;
@@ -50,11 +51,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         this.initRecycler();
         binding.btnAjouter.setOnClickListener(view3 -> {
             {
                 Intent i = new Intent(MainActivity.this,CreationQuestion.class);
                 startActivity(i);
+
             }
         });
 
@@ -69,6 +72,22 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.question:
+               service.supprimerQuestions();
+                adapter.list.clear();
+                adapter.notifyDataSetChanged();
+                return true;
+            case R.id.votes:
+                service.supprimerVotes();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void initRecycler() {
