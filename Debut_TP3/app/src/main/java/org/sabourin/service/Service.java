@@ -53,6 +53,15 @@ public class Service {
 
     public void creerVote(VDVote vdVote) throws MauvaisVote {
         if(vdVote.nom.trim().length() < 4) throw new MauvaisVote("nom trop court");
+        if(vdVote.barVote<0 || vdVote.barVote>5) throw new MauvaisVote("vote entre 0 et 5");
+        boolean ab= false;
+        for (VDQuestion a: toutesLesQuestions()) {
+            if (a.idQuestion.equals(vdVote.idQuestion)) {
+                ab=true;
+            }
+
+        } if(ab==false) throw new MauvaisVote("question N'existe pas");
+
         for (VDVote q : maBD.monDao().toutLesVotes()){
             if (q.nom.equals(vdVote.nom) && q.idQuestion.equals(vdVote.idQuestion))
                 throw new MauvaisVote("ce nom a deja voté à cette question");
@@ -67,7 +76,8 @@ public class Service {
         //TODO Présentement :   retourne une liste vide
         //TODO À faire :        trier la liste reçue en BD par le nombre de votes et la retourner
 
-        Collections.sort(maBD.monDao().touteLesQuestions(), new Comparator<VDQuestion>() {
+        List<VDQuestion> lsitequestion =maBD.monDao().touteLesQuestions();
+        Collections.sort(lsitequestion, new Comparator<VDQuestion>() {
             @Override
             public int compare(VDQuestion vdq1, VDQuestion vdq2) {
 
@@ -83,25 +93,29 @@ public class Service {
                 else if (difference < 0) {
 
                     // obj1 < obj2
-                    return -1;
+                    return 1;
                 }
                 else {
 
                     // obj1 > obj2
-                    return 1;
+                    return -1;
                 }
             }
         });
-        return maBD.monDao().touteLesQuestions();
+        return lsitequestion;
     }
 
     
     public float moyenneVotes(VDQuestion question) {
+       int vote =maBD.monDao().selectVote(question.idQuestion).size();
+
+
         return 0;
     }
 
     
     public Map<Integer, Integer> distributionVotes(VDQuestion question) {
+
         return null;
     }
 	
