@@ -33,12 +33,12 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.MyView
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
+    // Provide a suitable constructor (depends on the kind of dataset) np
     public QuestionAdapter() {
         list = new ArrayList<>();
     }
 
-    // Create new views (invoked by the layout manager)
+    // Create new views (invoked by the layout manager)np sauf ligne 47
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                          int viewType) {
@@ -49,7 +49,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.MyView
         return vh;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+    // Replace the contents of a view (invoked by the layout manager) ch
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
@@ -78,7 +78,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.MyView
 
     }
 
-    // renvoie la taille de la liste
+    // renvoie la taille de la liste np
     @Override
     public int getItemCount() {
         return list.size();

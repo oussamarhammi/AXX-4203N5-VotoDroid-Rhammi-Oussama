@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -110,13 +111,17 @@ public class Service {
        int vote =maBD.monDao().selectVote(question.idQuestion).size();
 
 
+
         return 0;
     }
 
     
     public Map<Integer, Integer> distributionVotes(VDQuestion question) {
+        Map<Integer, Integer> dataGraph = new HashMap<Integer, Integer>() {{
 
-        return null;
+        }};
+
+        return dataGraph;
     }
 	
 	public void supprimerQuestions(){

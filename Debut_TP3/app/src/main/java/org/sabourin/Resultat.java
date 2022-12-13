@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -15,7 +16,10 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
+import org.sabourin.bd.BD;
 import org.sabourin.databinding.ResultatBinding;
+import org.sabourin.databinding.VoteBinding;
+import org.sabourin.service.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,9 +29,16 @@ import java.util.Map;
 public class Resultat extends AppCompatActivity {
     private ResultatBinding binding;
     BarChart chart;
+    private Service service;
+    private BD maBD;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            maBD =  Room.databaseBuilder(getApplicationContext(), BD.class, "BDQuestions")
+                    .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration()
+                    .build();
+            service = new Service(maBD);
 
 
             binding = ResultatBinding.inflate(getLayoutInflater());
@@ -63,14 +74,8 @@ public class Resultat extends AppCompatActivity {
 
 
             /* Data and function call to bind the data to the graph */
-            Map<Integer, Integer> dataGraph = new HashMap<Integer, Integer>() {{
-                put(5, 10);
-                put(3, 3);
-                put(7, 2);
-                put(2, 1);
-                put(9, 0);
-            }};
-            setData(dataGraph);
+
+                service.distributionVotes()
 
 
         }
