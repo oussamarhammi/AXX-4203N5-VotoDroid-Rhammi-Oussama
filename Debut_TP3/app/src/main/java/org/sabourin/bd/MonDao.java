@@ -39,4 +39,5 @@ public interface MonDao {
     @Query("DELETE FROM VDVote")
     void supprimerVote();
 
+
 }

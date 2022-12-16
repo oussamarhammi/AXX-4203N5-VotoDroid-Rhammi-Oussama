@@ -14,6 +14,7 @@ import org.sabourin.exceptions.MauvaiseQuestion;
 import org.sabourin.modele.VDQuestion;
 import org.sabourin.modele.VDVote;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -28,6 +29,7 @@ public class Service {
 
     public int editText;
 
+    float sum, res;
 
     public Service(BD maBD){
         this.maBD = maBD;
@@ -106,19 +108,25 @@ public class Service {
         return lsitequestion;
     }
 
-    
     public float moyenneVotes(VDQuestion question) {
-       int vote =maBD.monDao().selectVote(question.idQuestion).size();
+          DecimalFormat format = new DecimalFormat("#.##");
+        for(VDVote q: maBD.monDao().selectVote(question.idQuestion)){
+            sum = (int)q.barVote + sum;
+        }
+        res = sum/maBD.monDao().selectVote(question.idQuestion).size();
+        return res;
 
-
-
-        return 0;
     }
+
+
 
     
     public Map<Integer, Integer> distributionVotes(VDQuestion question) {
         Map<Integer, Integer> dataGraph = new HashMap<Integer, Integer>() {{
 
+            for(VDVote q: maBD.monDao().selectVote(question.idQuestion)){
+                put(q.idVote.intValue(),(int)q.barVote);
+            }
         }};
 
         return dataGraph;

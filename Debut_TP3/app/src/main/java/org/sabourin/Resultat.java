@@ -1,5 +1,6 @@
 package org.sabourin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -19,6 +20,8 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import org.sabourin.bd.BD;
 import org.sabourin.databinding.ResultatBinding;
 import org.sabourin.databinding.VoteBinding;
+import org.sabourin.modele.VDQuestion;
+import org.sabourin.modele.VDVote;
 import org.sabourin.service.Service;
 
 import java.util.ArrayList;
@@ -31,6 +34,7 @@ public class Resultat extends AppCompatActivity {
     BarChart chart;
     private Service service;
     private BD maBD;
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -47,7 +51,14 @@ public class Resultat extends AppCompatActivity {
 
 
             chart = findViewById(R.id.chart);
-            setTitle("c'est comment la programmtion android?");
+            binding.textView6.setText(getIntent().getStringExtra("texte1"));
+            long monId = getIntent().getLongExtra("idtexte1",-1);
+            VDQuestion questionCourante =new VDQuestion();
+            questionCourante.idQuestion = monId;
+                String s= String.valueOf(service.moyenneVotes(questionCourante));
+            binding.textView.setText(s);
+            setData(service.distributionVotes(questionCourante));
+
 
             /* Settings for the graph - Change me if you want*/
             chart.setMaxVisibleValueCount(6);
@@ -70,13 +81,16 @@ public class Resultat extends AppCompatActivity {
             leftAxis.setValueFormatter(new DefaultAxisValueFormatter(0));
             chart.getDescription().setEnabled(false);
             chart.getAxisRight().setEnabled(false);
+            binding.button3.setOnClickListener(view3 -> {
+                {
+                    Intent i = new Intent(Resultat.this,MainActivity.class);
+                    startActivity(i);
 
+                }
+            });
 
 
             /* Data and function call to bind the data to the graph */
-
-                service.distributionVotes()
-
 
         }
 
