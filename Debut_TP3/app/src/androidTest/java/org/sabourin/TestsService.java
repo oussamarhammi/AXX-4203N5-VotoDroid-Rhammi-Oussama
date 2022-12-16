@@ -273,21 +273,43 @@ public class TestsService {
 
 
     @Test
-    public void TestDistributionOk(){
-        int num= bd.monDao().toutLesVotes().size();
-        service.supprimerVotes();
+    public void TestDistributionOk() throws MauvaiseQuestion, MauvaisVote {
+        VDQuestion question = new VDQuestion();
+        question.texteQuestion = "Aimes-tu les brownies au chocolat?";
+        VDVote vote = new VDVote();
+        VDVote vote2 = new VDVote();
+        service.creerQuestion(question);
+        vote.idQuestion=question.idQuestion;
+        vote2.idQuestion=question.idQuestion;
+        vote.nom = "mich";
+        vote2.nom = "mich1";
+        vote2.barVote=2;
+        vote.barVote=0;
+        service.creerVote(vote);
+        service.creerVote(vote2);
 
 
-        Assert.assertNotNull(num);
+
+        Assert.assertNotNull(service.distributionVotes(question));
     }
 
     @Test
-    public void TestMoyenneOk(){
-        int num= bd.monDao().toutLesVotes().size();
-        service.supprimerVotes();
+    public void TestMoyenneOk() throws MauvaiseQuestion, MauvaisVote {
+        VDQuestion question = new VDQuestion();
+        question.texteQuestion = "Aimes-tu les brownies au chocolat?";
+        VDVote vote = new VDVote();
+        VDVote vote2 = new VDVote();
+        service.creerQuestion(question);
+        vote.idQuestion=question.idQuestion;
+        vote2.idQuestion=question.idQuestion;
+        vote.nom = "mich";
+        vote2.nom = "mich1";
+        vote2.barVote=2;
+        vote.barVote=0;
+        service.creerVote(vote);
+        service.creerVote(vote2);
 
-
-        Assert.assertNotNull(num);
+        Assert.assertNotNull(service.moyenneVotes(question));
     }
 
     /*
