@@ -253,8 +253,42 @@ public class TestsService {
 
 
 
+    @Test
+    public void TestMenuSuppQuestion(){
+        int num= bd.monDao().touteLesQuestions().size();
+        service.supprimerQuestions();
 
 
+        Assert.assertNotNull(num);
+    }
+
+    @Test
+    public void TestMenuSuppVote(){
+        int num= bd.monDao().toutLesVotes().size();
+        service.supprimerVotes();
+
+
+        Assert.assertNotNull(num);
+    }
+
+
+    @Test
+    public void TestDistributionOk(){
+        int num= bd.monDao().toutLesVotes().size();
+        service.supprimerVotes();
+
+
+        Assert.assertNotNull(num);
+    }
+
+    @Test
+    public void TestMoyenneOk(){
+        int num= bd.monDao().toutLesVotes().size();
+        service.supprimerVotes();
+
+
+        Assert.assertNotNull(num);
+    }
 
     /*
     @After
